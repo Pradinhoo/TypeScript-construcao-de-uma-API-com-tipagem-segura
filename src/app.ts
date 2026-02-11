@@ -1,9 +1,17 @@
 import express, { Request, Response } from "express";
 import router from "./routes";
+import "reflect-metadata"
+import { AppDataSource } from "./config/DataSource";
 
 const app = express();
 app.use(express.json());
 router(app);
+
+AppDataSource.initialize().then(() => {
+  console.log("Banco de dados MSSQL conectado!");
+}).catch((erro) => {
+  console.log("Erro ao realizar conexão com o banco de dados.", erro);
+})
 
 app.get("/", (req: Request, res: Response) => {
   res.send("Bem vindo ao curso de TypeScript!");
@@ -26,7 +34,7 @@ function geraId() {
 }
 
 app.post("/pets", (_, res) => {
-  const pet1 = criaPet(geraId(), "Bolt", "cachorro", 3, false);
+const pet1 = criaPet(geraId(), "Bolt", "cachorro", 3, false);
   const pet2 = criaPet(geraId(), "Mel", "gato", 2, false);
 
   res.send([pet1, pet2]);

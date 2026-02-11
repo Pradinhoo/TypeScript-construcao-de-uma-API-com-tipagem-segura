@@ -1,0 +1,19 @@
+CREATE TABLE tblPetEspecie (
+	PeId INT NOT NULL PRIMARY KEY IDENTITY(1,1),
+	PeEspecie VARCHAR(100) NOT NULL,
+)
+
+INSERT INTO tblPetEspecie (PeEspecie) VALUES
+('Gato'),
+('Cachorro')
+
+
+CREATE TABLE tblPet (
+	PetId INT NOT NULL PRIMARY KEY IDENTITY(1,1),
+	PetNome VARCHAR(100) NOT NULL,
+	PeId INT NOT NULL,
+	CONSTRAINT FK_tblPet_tblPetEspecie FOREIGN KEY (PeId) REFERENCES tblPetEspecie(PeId),
+	PetDataNascimento Date NOT NULL,
+	PetAdotado BIT NOT NULL,
+	PetAtivo BIT NOT NULL DEFAULT 1
+)
